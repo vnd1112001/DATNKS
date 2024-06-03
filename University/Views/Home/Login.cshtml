@@ -1,0 +1,117 @@
+﻿@model University.Models.User
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Jost', sans-serif;
+    }
+
+    .container2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .register-container {
+        display: flex;
+        width: 80%;
+        max-width: 800px;
+        background-color: #2a545b;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+        overflow: hidden;
+        margin-bottom: 200px;
+    }
+
+    .register-image {
+        width: 40%;
+        background: url('/Adminassets/images/mn.jpg') center/cover no-repeat; /* Replace 'path_to_your_image.jpg' with the actual path to your image */
+    }
+
+    .register-form {
+        width: 60%;
+        padding: 40px;
+        box-sizing: border-box;
+        color: #fff;
+    }
+
+    label {
+        font-size: 2.3em;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        background-color: #e0dede;
+        color: #000;
+        font-size: 1em;
+    }
+
+    .button2 {
+        width: 100%;
+        height: 40px;
+        margin-top: 20px;
+        font-size: 1em;
+        font-weight: bold;
+        color: #fff;
+        background-color: #378996;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .button2:hover {
+            background-color: #6d44b8;
+        }
+</style>
+<section style="margin-bottom:40px" class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+                <div class="mb-3 mb-md-0">
+                    <h2 style="color: red">University</h2>
+                    <p>Very us move be blessed multiply night</p>
+                </div>
+                <div class="page_link">
+                    <a href="index.html">Home</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container2">
+    <div class="register-container">
+        <div class="register-image"></div>
+        <div class="register-form">
+            <label>Login</label>
+        
+       
+        <form asp-action="Login" method="post">
+            <div class="form-group">
+
+                    <input asp-for="Username" placeholder="Username" class="form-control" />
+                <span  class="text-dark"></span>
+            </div>
+            <div class="form-group">
+
+                    <input asp-for="Password" placeholder="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-dark"></span>
+            </div>
+                <button class="button2" type="submit">Login</button>
+            
+            <div asp-validation-summary="All" class="text-dark"></div>
+        </form>
+    </div>
+</div>
+</div>

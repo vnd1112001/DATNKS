@@ -1,0 +1,34 @@
+﻿@model List<University.Models.HolidaySchedule>
+
+@{
+    ViewData["Title"] = "Lịch Nghỉ";
+}
+<div class="banner" style="text-align: center;background-color: red;border-radius: 160px;margin-bottom:100px">
+    <img style="
+
+    width: 100%;
+
+" src="~/img/banner.jpg" />
+</div>
+<div class="container">
+    <h2>Lịch Nghỉ</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tiêu Đề</th>
+                <th>Ngày Bắt Đầu</th>
+                <th>Ngày Kết Thúc</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var holidaySchedule in Model)
+            {
+                <tr>
+                    <td>@holidaySchedule.Title</td>
+                    <td>@holidaySchedule.StartDate</td>
+                    <td>@(holidaySchedule.EndDate.HasValue ? holidaySchedule.EndDate.Value.ToString() : "Không xác định")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

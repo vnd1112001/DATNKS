@@ -1,0 +1,40 @@
+﻿@model University.Models.Announcement
+
+@{
+    ViewData["Title"] = "Announcement Detail";
+}
+<style>
+    .li {
+        border-bottom: 1px solid #e7e7e7;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="banner" style="text-align: center;background-color: red;border-radius: 160px;">
+    <img style="
+
+    width: 100%;
+
+" src="~/img/banner.jpg" />
+</div>
+<div class="container" style="margin-top:100px">
+    <div class="row">
+        <!-- Cột bên trái để hiển thị AnnouncementCategory -->
+        <div class="col-md-4">
+
+            <h3 style="color:#106CB2"> Tin Tức & Sự Kiện</h3>
+            <ul>
+                @foreach (var category in ViewData["Categories"] as List<University.Models.AnnouncementCategory>)
+                {
+                    <li class="li"><a href="@Url.Action("AnnouncementsByCategory", "Home", new { categoryId = category.CategoryId })">@category.Name</a></li>
+                }
+            </ul>
+        </div>
+        <!-- Cột bên phải để hiển thị chi tiết của bài viết -->
+        <div class="col-md-8">
+            <h2>@Model.Title</h2>
+            <p><strong>Publish Date:</strong> @Model.PublishedDate</p>
+            <p>@Model.Content</p>
+        </div>
+    </div>
+</div>

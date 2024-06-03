@@ -1,0 +1,42 @@
+﻿@model List<University.Models.TeachingSchedule>
+
+@{
+    ViewData["Title"] = "Lịch Dạy";
+}
+<div class="banner" style="text-align: center;background-color: red;border-radius: 160px;margin-bottom:100px">
+    <img style="
+
+    width: 100%;
+
+" src="~/img/banner.jpg" />
+</div>
+<div class="container">
+    <h2>Lịch Dạy</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ngày Dạy</th>
+                <th>Thứ Trong Tuần</th>
+                <th>Thời Gian Bắt Đầu</th>
+                <th>Thời Gian Kết Thúc</th>
+                <th>Giáo Viên</th>
+                <th>Môn Học</th>
+                <th>Lớp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teachingSchedule in Model)
+            {
+                <tr>
+                    <td>@teachingSchedule.TeachingDate</td>
+                    <td>@teachingSchedule.DayOfWeek</td>
+                    <td>@teachingSchedule.StartTime</td>
+                    <td>@teachingSchedule.EndTime</td>
+                    <td>@(teachingSchedule.Teacher != null ? teachingSchedule.Teacher.FullName : "")</td>
+                    <td>@(teachingSchedule.Subject != null ? teachingSchedule.Subject.SubjectName : "")</td>
+                    <td>@(teachingSchedule.Class != null ? teachingSchedule.Class.ClassName : "")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

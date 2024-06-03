@@ -1,0 +1,38 @@
+﻿@model List<University.Models.MeetingSchedule>
+
+@{
+    ViewData["Title"] = "Lịch Họp";
+}
+<div class="banner" style="text-align: center;background-color: red;border-radius: 160px;margin-bottom:100px">
+    <img style="
+
+    width: 100%;
+
+" src="~/img/banner.jpg" />
+</div>
+<div class="container">
+    <h2>Lịch Họp</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tiêu Đề</th>
+                <th>Mô Tả</th>
+                <th>Ngày Họp</th>
+                <th>Thời Gian Bắt Đầu</th>
+                <th>Thời Gian Kết Thúc</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meetingSchedule in Model)
+            {
+                <tr>
+                    <td>@meetingSchedule.Title</td>
+                    <td>@(meetingSchedule.Description ?? "Không có mô tả")</td>
+                    <td>@meetingSchedule.MeetingDate</td>
+                    <td>@meetingSchedule.StartTime</td>
+                    <td>@meetingSchedule.EndTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
