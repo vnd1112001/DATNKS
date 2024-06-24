@@ -1,0 +1,44 @@
+﻿@model University.Models.StudentEvent
+
+@{
+    ViewData["Title"] = "Event Detail";
+}
+<style>
+    .event-detail-card {
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-detail-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e7e7e7;
+        border-radius: 10px 10px 0 0;
+        padding: 15px;
+    }
+
+    .event-detail-body {
+        padding: 15px;
+    }
+</style>
+<div class="banner" style="text-align: center;background-color: red;border-radius: 160px;">
+    <img style="
+
+    width: 100%;
+
+" src="~/img/banner.jpg" />
+</div>
+<div class="container">
+    <div class="card event-detail-card">
+        <div class="event-detail-header">
+            <h2>@Model.EventName</h2>
+        </div>
+        <div class="card-body event-detail-body">
+            <p><strong>Ngày:</strong> @Model.EventDate?.ToString("dd/MM/yyyy")</p>
+            <p><strong>Thời gian:</strong> @Model.StartTime - @Model.EndTime</p>
+            <p><strong>Địa điểm:</strong> @Model.Location</p>
+            <p><strong>Người tổ chức:</strong> @Model.Organizer</p>
+            <p><strong>Mô tả:</strong> @Model.Description</p>
+        </div>
+    </div>
+</div>

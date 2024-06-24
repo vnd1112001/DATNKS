@@ -22,7 +22,24 @@
     <link rel="stylesheet" href="~/css/style.css" />
 
     <link rel="stylesheet" href="~/css/responsive.css" />
+    <style>
+        .footer {
+            background-color: #0a4279;
+            color: white;
+            padding: 20px 0;
+        }
+        .footer h5{
+            color: white !important;
+        }
+            .footer a {
+                color: white;
+                text-decoration: none;
+            }
 
+                .footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
 </head>
 
 <body>
@@ -33,7 +50,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light w-100">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <a class="navbar-brand logo_h" asp-controller="Home" asp-action="Index">
-                        <img style="width:100%;" src="~/img/logo.png" alt="Logo">
+                        <img style="width:65px;" src="~/img/logo-truong.png" alt="Logo">
                     </a>
                     <button class="navbar-toggler"
                             type="button"
@@ -66,7 +83,7 @@
                                             Lịch
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" asp-controller="Home" asp-action="MeetingSchedule">Lịch họp</a>
+                                            <a class="dropdown-item" asp-controller="Home" asp-action="WeekSchedule">Lịch tuần</a>
                                             <a class="dropdown-item" asp-controller="Home" asp-action="TeachingSchedule">Lịch dạy</a>
                                             <a class="dropdown-item" asp-controller="Home" asp-action="HolidaySchedule">Lịch nghỉ</a>
                                         </div>
@@ -93,9 +110,15 @@
                                     @{
                                         if (User.Identity.IsAuthenticated)
                                         {
-                                            <li class="nav-item">
-                                                <a asp-controller="Home" asp-action="Logout" class="nav-link">Đăng xuất</a>
-                                            </li>
+                                            <li class="nav-item active dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ti-user" aria-hidden="true"></i>
+                                        </a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item " asp-controller="Home" asp-action="Manage">Quản lý</a>
+                                                <a asp-controller="Home" asp-action="Logout" class="dropdown-item">Đăng xuất</a>
+                                            </div>
+                                           </li>
 
                                           
                                         }
@@ -110,54 +133,48 @@
     </header>
 
     @RenderBody()
-    <footer style="margin-top:40px;" class="footer-area section_gap">
+    <footer class="footer">
         <div class="container">
             <div class="row">
-
-                <div class="col-lg-4 col-md-6 single-footer-widget">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li>
-                       
-                            
-                            <a href="#">
-                                Tìm hiểu về chúng tôi
-                            </a>
-                        </li>
-                        <li><a href="#"> Kế hoạch tuyển sinh</a></li>
-                        <li><a href="#">Các chương trình đào tạo</a></li>
-                        <li><a href="#">Tư vấn tuyển sinh</a></li>
+                <div class="col-md-3">
+                    <h5>ĐÀO TẠO</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">CHƯƠNG TRÌNH ĐÀO TẠO</a></li>
+                        <li><a href="#">QUY CHẾ, QUY ĐỊNH</a></li>
+                        <li><a href="#">WEBSITE ĐÀO TẠO</a></li>
+                        <li><a href="#">WEBSITE TUYỂN SINH</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-4 col-md-6 single-footer-widget">
-                    <h4>Features</h4>
-                    <ul>
-                        <li><a href="#">Jobs</a></li>
-                        <li><a href="#">Brand Assets</a></li>
-                        <li><a href="#">Investor Relations</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div class="col-md-3">
+                    <h5>TÀI NGUYÊN</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">TÀI NGUYÊN SỐ</a></li>
+                        <li><a href="#">WEBSITE THƯ VIỆN</a></li>
+                        <li><a href="#">E-LEARNING</a></li>
+                        <li><a href="#">HỌC BỔNG - VIỆC LÀM</a></li>
                     </ul>
                 </div>
-
-                <div class="col-lg-4 col-md-6 single-footer-widget">
-                    <h4>Newsletter</h4>
-                    <p>You can trust us. we only send promo offers,</p>
-                    <div class="form-wrap" id="mc_embed_signup">
-                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                              method="get" class="form-inline">
-                            <input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Your Email Address '" required="" type="email">
-                            <button class="click-btn btn btn-default">Subscribe</button>
-                            <div style="position: absolute; left: -5000px;">
-                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                            </div>
-
-                            <div class="info"></div>
-                        </form>
-                    </div>
+                <div class="col-md-3">
+                    <h5>QUY ĐỊNH CHUNG</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">QUY CHẾ TỔ CHỨC VÀ HOẠT ĐỘNG</a></li>
+                        <li><a href="#">QUY CHẾ BỔ NHIỆM</a></li>
+                        <li><a href="#">QUY ĐỊNH CẤP XÉT HỌC BỔNG</a></li>
+                        <li><a href="#">QUY CHẾ CHI TIÊU NỘI BỘ</a></li>
+                        <li><a href="#">QUY CHẾ DÂN CHỦ</a></li>
+                        <li><a href="#">DANH MỤC VỊ TRÍ VIỆC LÀM</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>KẾT NỐI ĐẾN TRƯỜNG</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">FACEBOOK</a></li>
+                        <li><a href="#">WIKIPEDIA</a></li>
+                        <li><a href="#">YOUTUBE</a></li>
+                        <li><a href="#">LIÊN HỆ</a></li>
+                    </ul>
                 </div>
             </div>
-
         </div>
     </footer>
 

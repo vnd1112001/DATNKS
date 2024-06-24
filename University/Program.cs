@@ -89,6 +89,16 @@ app.MapAreaControllerRoute(
     pattern: "Admin/MeetingSchedules/{action=Index}/{id?}",
     defaults: new { controller = "MeetingSchedules", action = "Index" });
 app.MapAreaControllerRoute(
+    name: "MyAreas2",
+    areaName: "Admin",
+    pattern: "Admin/WeeklySchedules/{action=Index}/{id?}",
+    defaults: new { controller = "WeeklySchedules", action = "Index" });
+app.MapAreaControllerRoute(
+    name: "MyAreas2",
+    areaName: "Admin",
+    pattern: "Admin/StudentEvents/{action=Index}/{id?}",
+    defaults: new { controller = "StudentEvents", action = "Index" });
+app.MapAreaControllerRoute(
     name: "MyAreas",
     areaName: "Teacher",
     pattern: "Teacher/{action=Index}/{id?}",

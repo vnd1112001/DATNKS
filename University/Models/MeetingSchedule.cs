@@ -7,7 +7,7 @@ public partial class MeetingSchedule
 {
     public int MeetingId { get; set; }
 
-    public string Title { get; set; } = null!;
+    public string? Title { get; set; }
 
     public string? Description { get; set; }
 

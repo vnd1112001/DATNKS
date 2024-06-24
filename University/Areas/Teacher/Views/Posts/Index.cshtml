@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Danh sách</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Tạo mới</a>
 </p>
 <table class="table">
     <thead>
@@ -43,9 +43,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PostImage)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
+          
+                <td>
+                    @if (item.Content.Length > 10)
+                    {
+                        @Html.Raw(item.Content.Substring(0, 10) + "...")
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Content)
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PublishedDate)
             </td>
@@ -56,9 +64,9 @@
                 @Html.DisplayFor(modelItem => item.Category.CategoryId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PostId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PostId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PostId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PostId">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.PostId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.PostId">Xóa</a>
             </td>
         </tr>
 }

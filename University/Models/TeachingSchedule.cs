@@ -13,13 +13,13 @@ public partial class TeachingSchedule
 
     public int? ClassId { get; set; }
 
-    public DateOnly? TeachingDate { get; set; }
+    public DateTime? TeachingDate { get; set; }
 
     public string? DayOfWeek { get; set; }
 
-    public TimeOnly? StartTime { get; set; }
+    public TimeSpan? StartTime { get; set; }
 
-    public TimeOnly? EndTime { get; set; }
+    public TimeSpan? EndTime { get; set; }
 
     public virtual Class? Class { get; set; }
 

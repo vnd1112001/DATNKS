@@ -1,0 +1,97 @@
+﻿@model List<University.Models.WeeklySchedule>
+
+@{
+    ViewData["Title"] = "Lịch Tuần";
+}
+
+<style>
+    .week-calendar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .day-column {
+        flex: 1;
+        margin: 5px;
+        padding: 10px;
+        border: 1px solid #e7e7e7;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+    }
+
+    .day-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .event-card {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #ffffff;
+    }
+
+        .event-card h5 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .event-card p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+</style>
+
+<div class="banner" style="text-align: center;background-color: red;border-radius: 10px;margin-bottom: 20px;">
+    <img style="width: 100%;" src="~/img/banner.jpg" />
+</div>
+
+<div class="container">
+    <h2 class="text-center">Lịch Tuần</h2>
+
+    <!-- Form lọc -->
+    <form method="get" class="form-inline mb-4">
+        <div class="form-group mr-3">
+            <label for="dayOfWeek" class="mr-2">Ngày trong tuần:</label>
+            <select name="dayOfWeek" id="dayOfWeek" class="form-control">
+                <option value="">Tất cả</option>
+                <option value="Thứ Hai">Thứ Hai</option>
+                <option value="Thứ Ba">Thứ Ba</option>
+                <option value="Thứ Tư">Thứ Tư</option>
+                <option value="Thứ Năm">Thứ Năm</option>
+                <option value="Thứ Sáu">Thứ Sáu</option>
+                <option value="Thứ Bảy">Thứ Bảy</option>
+                <option value="Chủ Nhật">Chủ Nhật</option>
+            </select>
+        </div>
+        <div class="form-group mr-3">
+            <label for="host" class="mr-2">Chủ trì:</label>
+            <input type="text" name="host" id="host" class="form-control" placeholder="Nhập tên chủ trì" />
+        </div>
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+
+    <div class="week-calendar">
+        @foreach (var dayGroup in Model.GroupBy(m => m.DayOfWeek))
+        {
+            <div class="day-column">
+                <div class="day-header">@dayGroup.Key</div>
+                @foreach (var schedule in dayGroup)
+                {
+                    <div class="event-card">
+                        <h5>@schedule.Time</h5>
+                        <p><strong>Ngày:</strong> @schedule.Date?.ToString("dd/MM/yyyy")</p>
+                        <p><strong>Nội dung:</strong> @schedule.Content</p>
+                        <p><strong>Tham gia:</strong> @schedule.Participants</p>
+                        <p><strong>Địa điểm:</strong> @schedule.Location</p>
+                        <p><strong>Chủ trì:</strong> @schedule.Host</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

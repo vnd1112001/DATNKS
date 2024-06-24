@@ -29,11 +29,15 @@ public partial class UniversityManagementContext : DbContext
 
     public virtual DbSet<PostCategory> PostCategories { get; set; }
 
+    public virtual DbSet<StudentEvent> StudentEvents { get; set; }
+
     public virtual DbSet<Subject> Subjects { get; set; }
 
     public virtual DbSet<TeachingSchedule> TeachingSchedules { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<WeeklySchedule> WeeklySchedules { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -48,10 +52,7 @@ public partial class UniversityManagementContext : DbContext
             entity.Property(e => e.AnnouncementId).HasColumnName("AnnouncementID");
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Content).HasColumnType("text");
-            entity.Property(e => e.Title)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.Author).WithMany(p => p.Announcements)
                 .HasForeignKey(d => d.AuthorId)
@@ -69,9 +70,7 @@ public partial class UniversityManagementContext : DbContext
             entity.ToTable("AnnouncementCategory");
 
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Class>(entity =>
@@ -79,9 +78,7 @@ public partial class UniversityManagementContext : DbContext
             entity.HasKey(e => e.ClassId).HasName("PK__Classes__CB1927A009DE7BCC");
 
             entity.Property(e => e.ClassId).HasColumnName("ClassID");
-            entity.Property(e => e.ClassName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.ClassName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<HolidaySchedule>(entity =>
@@ -91,9 +88,7 @@ public partial class UniversityManagementContext : DbContext
             entity.ToTable("HolidaySchedule");
 
             entity.Property(e => e.HolidayId).HasColumnName("HolidayID");
-            entity.Property(e => e.Title)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Title).HasMaxLength(255);
         });
 
         modelBuilder.Entity<MeetingSchedule>(entity =>
@@ -103,10 +98,7 @@ public partial class UniversityManagementContext : DbContext
             entity.ToTable("MeetingSchedule");
 
             entity.Property(e => e.MeetingId).HasColumnName("MeetingID");
-            entity.Property(e => e.Description).HasColumnType("text");
-            entity.Property(e => e.Title)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Title).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Post>(entity =>
@@ -116,13 +108,10 @@ public partial class UniversityManagementContext : DbContext
             entity.Property(e => e.PostId).HasColumnName("PostID");
             entity.Property(e => e.AuthorId).HasColumnName("AuthorID");
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Content).HasColumnType("text");
             entity.Property(e => e.PostImage)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Title)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Title).HasMaxLength(255);
 
             entity.HasOne(d => d.Author).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.AuthorId)
@@ -140,9 +129,17 @@ public partial class UniversityManagementContext : DbContext
             entity.ToTable("PostCategory");
 
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
-            entity.Property(e => e.Name)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<StudentEvent>(entity =>
+        {
+            entity.HasKey(e => e.EventId).HasName("PK__StudentE__7944C87045F365D3");
+
+            entity.Property(e => e.EventId).HasColumnName("EventID");
+            entity.Property(e => e.EventName).HasMaxLength(255);
+            entity.Property(e => e.Location).HasMaxLength(255);
+            entity.Property(e => e.Organizer).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Subject>(entity =>
@@ -150,9 +147,7 @@ public partial class UniversityManagementContext : DbContext
             entity.HasKey(e => e.SubjectId).HasName("PK__Subjects__AC1BA388060DEAE8");
 
             entity.Property(e => e.SubjectId).HasColumnName("SubjectID");
-            entity.Property(e => e.SubjectName)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.SubjectName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<TeachingSchedule>(entity =>
@@ -204,6 +199,19 @@ public partial class UniversityManagementContext : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<WeeklySchedule>(entity =>
+        {
+            entity.HasKey(e => e.ScheduleId).HasName("PK__WeeklySc__9C8A5B6949C3F6B7");
+
+            entity.ToTable("WeeklySchedule");
+
+            entity.Property(e => e.ScheduleId).HasColumnName("ScheduleID");
+            entity.Property(e => e.DayOfWeek).HasMaxLength(20);
+            entity.Property(e => e.Host).HasMaxLength(255);
+            entity.Property(e => e.Location).HasMaxLength(255);
+            entity.Property(e => e.Participants).HasMaxLength(255);
         });
 
         OnModelCreatingPartial(modelBuilder);

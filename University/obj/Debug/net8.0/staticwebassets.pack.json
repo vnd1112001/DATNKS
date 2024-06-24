@@ -3217,6 +3217,18 @@
       "PackagePath": "staticwebassets\\img\\banner2.jpg"
     },
     {
+      "Id": "D:\\DATN\\University\\wwwroot\\img\\bannerspkt.png",
+      "PackagePath": "staticwebassets\\img\\bannerspkt.png"
+    },
+    {
+      "Id": "D:\\DATN\\University\\wwwroot\\img\\bannerspkt2.jpg",
+      "PackagePath": "staticwebassets\\img\\bannerspkt2.jpg"
+    },
+    {
+      "Id": "D:\\DATN\\University\\wwwroot\\img\\bannerspkt3.png",
+      "PackagePath": "staticwebassets\\img\\bannerspkt3.png"
+    },
+    {
       "Id": "D:\\DATN\\University\\wwwroot\\img\\bg-footer.png",
       "PackagePath": "staticwebassets\\img\\bg-footer.png"
     },
@@ -3231,6 +3243,10 @@
     {
       "Id": "D:\\DATN\\University\\wwwroot\\img\\link3.jpg",
       "PackagePath": "staticwebassets\\img\\link3.jpg"
+    },
+    {
+      "Id": "D:\\DATN\\University\\wwwroot\\img\\logo-truong.png",
+      "PackagePath": "staticwebassets\\img\\logo-truong.png"
     },
     {
       "Id": "D:\\DATN\\University\\wwwroot\\img\\logo.png",

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<University.Models.WeeklySchedule>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Danh sách</h1>
+
+<p>
+    <a asp-action="Create">Tạo mới</a> <br />
+    <a asp-action="Import" class="btn btn-secondary">Thêm từ excel</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Participants)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Host)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayOfWeek)
+            </td>
+            <td>
+                    @item.Date?.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+                <td>
+                    @if (item.Content.Length > 10)
+                    {
+                        @Html.Raw(item.Content.Substring(0, 10) + "...")
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Content)
+                    }
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Participants)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Host)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ScheduleId">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ScheduleId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.ScheduleId">Xóa</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

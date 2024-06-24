@@ -24,19 +24,105 @@ namespace University.Controllers
             _httpContextAccessor = httpContextAccessor;
             _userDAO = userDAO;
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
+        //Dang nhap
+        [HttpPost]
+        public IActionResult Login(User user)
+        {
+            User existingUser = _userDAO.GetUserByUsername(user.Username);
+
+            if (existingUser == null || existingUser.Password != user.Password)
+            {
+                ModelState.AddModelError("LoginError", "Invalid username or password");
+                return View();
+            }
+
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, existingUser.UserId.ToString())
+    };
+
+            if (existingUser.Role == "Admin")
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
+                return RedirectToAction("Index", "Admin");
+            }
+            if (existingUser.Role == "Teacher")
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Teacher"));
+                HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
+                return RedirectToAction("Index", "Teacher");
+            }
+            HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
+            return RedirectToAction("Index", "Home");
+        }
+        // Lấy thông tin user ID từ cookie
+        private int GetUserId()
+        {
+            if (_httpContextAccessor.HttpContext.User.Identity is ClaimsIdentity identity && identity.IsAuthenticated)
+            {
+
+                var userIdClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    return userId;
+                }
+            }
+
+            return 0;
+        }
+        public IActionResult Manage()
+        {
+            if (User.Identity is ClaimsIdentity identity && identity.IsAuthenticated)
+            {
+                var roleClaim = identity.FindFirst(ClaimTypes.Role);
+
+                if (roleClaim != null)
+                {
+                    if (roleClaim.Value == "Admin")
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (roleClaim.Value == "Teacher")
+                    {
+                        return RedirectToAction("Index", "Teacher");
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
         public IActionResult Index()
         {
-            // Lấy danh sách bài viết, thông báo và hình ảnh
+            // Lấy danh sách bài viết, thông báo và sự kiện
             var posts = _ctx.Posts.ToList();
             var announcements = _ctx.Announcements.ToList();
+            var events = _ctx.StudentEvents.ToList();
 
             // Truyền dữ liệu đến view
             ViewData["Posts"] = posts;
             ViewData["Announcements"] = announcements;
+            ViewData["Events"] = events;
 
             return View();
         }
+        public IActionResult EventDetail(int id)
+        {
+            var eventDetail = _ctx.StudentEvents.FirstOrDefault(e => e.EventId == id);
+            if (eventDetail == null)
+            {
+                return NotFound();
+            }
+            return View(eventDetail);
+        }
+
         public IActionResult Post()
         {
 
@@ -136,52 +222,27 @@ namespace University.Controllers
             var holidaySchedules = _ctx.HolidaySchedules.ToList();
             return View(holidaySchedules);
         }
-        public IActionResult MeetingSchedule()
+        public IActionResult WeekSchedule(string? dayOfWeek, string? host)
         {
-            var meetingSchedules = _ctx.MeetingSchedules.ToList();
-            return View(meetingSchedules);
+            var weekSchedules = _ctx.WeeklySchedules.AsQueryable();
+
+            if (!string.IsNullOrEmpty(dayOfWeek))
+            {
+                weekSchedules = weekSchedules.Where(s => s.DayOfWeek == dayOfWeek);
+            }
+
+            if (!string.IsNullOrEmpty(host))
+            {
+                weekSchedules = weekSchedules.Where(s => s.Host.Contains(host));
+            }
+
+            return View(weekSchedules.ToList());
         }
 
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
 
-        //Dang nhap
-        [HttpPost]
-        public IActionResult Login(User user)
-        {
-            User existingUser = _userDAO.GetUserByUsername(user.Username);
 
-            if (existingUser == null || existingUser.Password != user.Password)
-            {
-                ModelState.AddModelError("LoginError", "Invalid username or password");
-                return View();
-            }
-
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, existingUser.UserId.ToString())
-    };
-
-            if (existingUser.Role == "Admin")
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-                HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
-                return RedirectToAction("Index", "Admin");
-            }
-            if (existingUser.Role == "Teacher")
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "Teacher"));
-                HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
-                return RedirectToAction("Index", "Teacher");
-            }
-            HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme))).Wait();
-            return RedirectToAction("Index", "Home");
-        }
-
+  
         [HttpGet]
         public IActionResult Logout()
         {
@@ -192,22 +253,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
-        // Lấy thông tin user ID từ cookie
-        private int GetUserId()
-        {
-            if (_httpContextAccessor.HttpContext.User.Identity is ClaimsIdentity identity && identity.IsAuthenticated)
-            {
-
-                var userIdClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
-
-                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
-                {
-                    return userId;
-                }
-            }
-
-            return 0;
-        }
+      
 
         public IActionResult Privacy()
         {

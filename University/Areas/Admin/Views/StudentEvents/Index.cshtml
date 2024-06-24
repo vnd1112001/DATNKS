@@ -1,0 +1,79 @@
+﻿@model IEnumerable<University.Models.StudentEvent>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Danh sách</h1>
+
+<p>
+    <a asp-action="Create">Tạo mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organizer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+                <td>
+                    @if (item.Description.Length > 10)
+                    {
+                        @Html.Raw(item.Description.Substring(0, 10) + "...")
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Description)
+                    }
+                </td>
+            <td>
+                    @item.EventDate?.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organizer)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EventId">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.EventId">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.EventId">Xóa</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
